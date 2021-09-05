@@ -48,9 +48,7 @@ jobs:
       - name: Add release to Maven package template
         run: |-
           cd generated/maven/lib
-          cat build.template.gradle \
-            | sed s/{{VERSION}}/${GITHUB_REF}/g \
-            > build.gradle
+          cat build.template.gradle | sed s/{{VERSION}}/${GITHUB_REF}/g > build.gradle
       - name: Generate Maven package
         run: ./generate_maven.sh
       - name: Publish package
