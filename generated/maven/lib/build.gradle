@@ -66,12 +66,15 @@ publishing {
             }
         }
     }
+
     repositories {
         maven {
-            // change URLs to point to your repos, e.g. http://my.org/repo
-            def releasesRepoUrl = layout.buildDirectory.dir('repos/releases')
-            def snapshotsRepoUrl = layout.buildDirectory.dir('repos/snapshots')
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/mattwelke/published-protos-test"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
         }
     }
 }
