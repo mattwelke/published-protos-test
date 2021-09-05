@@ -52,7 +52,7 @@ jobs:
         uses: arduino/setup-protoc@v1
       - name: Add release to Maven package template
         env:
-          RELEASE_VERSION: ${{ steps.publish_version.value }}
+          RELEASE_VERSION: ${{ steps.publish_version.outputs.value }}
         run: |-
           echo "Release version = $RELEASE_VERSION"
           cd generated/maven/lib
