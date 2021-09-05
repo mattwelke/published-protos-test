@@ -21,7 +21,13 @@ jobs:
           distribution: 'adopt'
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v1
+      - name: Generate Maven package
+        run: ./generate_maven.sh
       - name: Publish package
-        run: gradle publish
+        run: |-
+          cd generated/maven
+          gradle publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
