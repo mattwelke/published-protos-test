@@ -13,7 +13,7 @@ plugins {
 }
 
 group = 'com.mattwelke'
-version = '0.1.0'
+version = '{{VERSION}}'
 
 java {
     withSourcesJar()
