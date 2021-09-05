@@ -50,4 +50,4 @@ jobs:
       - name: Add release to Maven package template
         run: |-
           cd generated/maven/lib
-          pwd; echo "cat build.template.gradle | sed s/{{VERSION}}/${GITHUB_REF}/g > build.gradle2"
+          pwd; echo "cat build.template.gradle | sed s/{{VERSION}}/${RELEASE_VERSION}/g > build.gradle2"
