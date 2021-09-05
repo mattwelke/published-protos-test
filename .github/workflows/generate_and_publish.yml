@@ -3,12 +3,29 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Publish Maven package (GitHub Packages)
+name: Generate and publish to GitHub Packages
 on:
   release:
     types: [created]
 jobs:
-  publish:
+  publish-go:
+    runs-on: ubuntu-latest 
+    permissions: 
+      contents: read
+      packages: write 
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v1
+      - name: Generate Go module
+        run: ./generate_go.sh
+      - name: Publish package
+        run: |-
+          echo "skipping for now"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  publish-maven:
     runs-on: ubuntu-latest 
     permissions: 
       contents: read
