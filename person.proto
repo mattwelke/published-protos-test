@@ -1,0 +1,22 @@
+syntax = "proto3";
+package mattwelke.protobuf.test;
+
+option java_package = "com.mattwelke.protobuf.test";
+option java_multiple_files = true;
+
+// A person.
+message Person {
+    // The address of a person.
+    message Address {
+        // The street number, with or without an alphabetic prefix.
+        string street_number = 1;
+        // The street name.
+        string name = 2;
+    }
+
+    // The person's name.
+    string name = 1;
+
+    // The person's address.
+    Address address = 2;
+}
