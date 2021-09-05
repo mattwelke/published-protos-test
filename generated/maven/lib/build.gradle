@@ -50,6 +50,7 @@ publishing {
             pom {
                 name = 'Protobuf Test'
                 description = 'A test of publishing generated Protobuf Java files via Maven.'
+                url = 'https://github.com/mattwelke/published-protos-test'
                 licenses {
                     license {
                         name = 'The Apache License, Version 2.0'
@@ -62,6 +63,11 @@ publishing {
                         name = 'Matt Welke'
                         email = 'mattwelke@gmail.com'
                     }
+                }
+                scm {
+                    connection = 'https://github.com/mattwelke/published-protos-test.git'
+                    developerConnection = 'git@github.com:mattwelke/published-protos-test.git'
+                    url = 'https://github.com/mattwelke/published-protos-test'
                 }
             }
         }
