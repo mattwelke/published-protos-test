@@ -40,7 +40,7 @@ jobs:
         id: publish_version
         run: |-
           RELEASE_VERSION_WITH_V=${GITHUB_REF#refs/*/}
-          echo ::set-output name=value::v${RELEASE_VERSION_WITH_V:1}
+          echo ::set-output name=value::${RELEASE_VERSION_WITH_V:1}
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v2
         with:
@@ -50,14 +50,14 @@ jobs:
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Install Protoc
         uses: arduino/setup-protoc@v1
-      - name: Add release to Maven package template
+      - name: Add publish version to Maven package template
         env:
-          RELEASE_VERSION: ${{ steps.publish_version.outputs.value }}
+          VERSION: ${{ steps.publish_version.outputs.value }}
         run: |-
           echo "Release version = $RELEASE_VERSION"
           cd generated/maven/lib
           cat build.template.gradle \
-            | sed s/{{VERSION}}/${RELEASE_VERSION}/g > build.gradle
+            | sed s/{{VERSION}}/${VERSION}/g > build.gradle
       - name: Generate Maven package
         run: ./generate_maven.sh
       - name: Publish package
