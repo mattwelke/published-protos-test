@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Generate and publish to GitHub Packages
+name: Generate and publish packages
 on:
   release:
     types: [created]
@@ -18,10 +18,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.16'
       - name: Install Protoc
         uses: arduino/setup-protoc@v1
       - name: Install protoc-gen-go
-        run: go install google.golang.org/protobuf/cmd/protoc-gen-go
+        run: go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
       - name: Generate Go module
         run: ./generate_go.sh
       - name: Publish package
@@ -48,12 +50,4 @@ jobs:
       - name: Add release to Maven package template
         run: |-
           cd generated/maven/lib
-          cat build.template.gradle | sed s/{{VERSION}}/${GITHUB_REF}/g > build.gradle
-      - name: Generate Maven package
-        run: ./generate_maven.sh
-      - name: Publish package
-        run: |-
-          cd generated/maven
-          gradle publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          pwd; echo "cat build.template.gradle | sed s/{{VERSION}}/${GITHUB_REF}/g > build.gradle2"
