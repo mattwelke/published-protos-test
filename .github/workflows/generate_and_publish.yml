@@ -27,7 +27,7 @@ jobs:
       - name: Generate Go module
         run: ./generate_go.sh
       - name: Publish package
-        run: echo "skipping for now"
+        run: echo "skipping for now"; cat generated/go/github.com/mattwelke/protobuf-test-go/pb/*.go
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   publish-maven:
@@ -40,7 +40,7 @@ jobs:
         id: publish_version
         run: |-
           RELEASE_VERSION_WITH_V=${GITHUB_REF#refs/*/}
-          echo ::set-output name=value::${RELEASE_VERSION_WITH_V:1}
+          cat "echo ::set-output name=value::${RELEASE_VERSION_WITH_V:1}"
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v2
         with:
@@ -54,6 +54,7 @@ jobs:
         env:
           RELEASE_VERSION: ${{ steps.publish_version.value }}
         run: |-
+          echo "Release version = $RELEASE_VERSION"
           cd generated/maven/lib
           cat build.template.gradle \
             | sed s/{{VERSION}}/${RELEASE_VERSION}/g > build.gradle
