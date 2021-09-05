@@ -40,7 +40,7 @@ jobs:
         id: publish_version
         run: |-
           RELEASE_VERSION_WITH_V=${GITHUB_REF#refs/*/}
-          cat "echo ::set-output name=value::${RELEASE_VERSION_WITH_V:1}"
+          echo ::set-output name=value::${RELEASE_VERSION_WITH_V:1}
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v2
         with:
