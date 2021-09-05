@@ -56,7 +56,7 @@ jobs:
         run: |-
           cd generated/maven/lib
           cat build.template.gradle \
-            | sed s/{{VERSION}}/${RELEASE_VERSION}/g > build.gradle2
+            | sed s/{{VERSION}}/${RELEASE_VERSION}/g > build.gradle
       - name: Generate Maven package
         run: ./generate_maven.sh
       - name: Publish package
