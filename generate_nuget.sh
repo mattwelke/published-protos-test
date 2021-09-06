@@ -4,7 +4,7 @@ SRC_DIR="."
 DST_DIR="generated/nuget/ProtobufTest"
 
 # Delete any existing C# files before generating C# code.
-rm -r generated/nuget/ProtobufTest/*.cs
+rm -r generated/nuget/ProtobufTest/*.cs 2> /dev/null
 
 protoc \
   -I="." \

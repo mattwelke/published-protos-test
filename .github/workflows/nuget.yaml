@@ -1,4 +1,4 @@
-name: Nuget
+name: NuGet
 on:
   release:
     types: [created]
@@ -45,6 +45,8 @@ jobs:
           cd generated/nuget/ProtobufTest
           dotnet pack ProtobufTest.csproj --output nuget-packages --configuration Release
       - name: Push package
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |-
           cd generated/nuget/ProtobufTest
           dotnet nuget push **/*.nupkg --source https://nuget.pkg.github.com/mattwelke/index.json
