@@ -35,19 +35,12 @@ jobs:
           rm ProtobufTest.template.csproj
       - name: Generate package
         run: ./generate_nuget.sh
-      # some from https://github.com/brandedoutcast/publish-nuget/issues/21
-      # and https://github.blog/changelog/2020-10-29-nuget-supports-api-key-option/
-      - name: Build package
+      - name: Publish package
+        env:
+          VERSION: ${{ steps.publish_version.outputs.value }}
         run: |-
           cd generated/nuget/ProtobufTest
-          dotnet build --configuration Release
-      - name: Pack package
-        run: |-
-          cd generated/nuget/ProtobufTest
-          dotnet pack ProtobufTest.csproj --output nuget-packages --configuration Release
-      - name: Push package
-        run: |-
-          cd generated/nuget/ProtobufTest
-          dotnet nuget push "*.nupkg" \
+          dotnet pack --configuration Release
+          dotnet nuget push "bin/Release/ProtobufTest.${VERSION}.nupkg" \
             --api-key ${{ secrets.GITHUB_TOKEN }} \
             --source https://nuget.pkg.github.com/${{ github.repository_owner }}
