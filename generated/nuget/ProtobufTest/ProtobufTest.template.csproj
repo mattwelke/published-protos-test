@@ -6,6 +6,9 @@
     <PackageId>ProtobufTest</PackageId>
     <Version>{{VERSION}}</Version>
     <Authors>Matt Welke</Authors>
+
+    <RepositoryUrl>https://github.com/mattwelke/published-protos-test.git</RepositoryUrl> 
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
