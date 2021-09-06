@@ -1,0 +1,49 @@
+name: Nuget
+on:
+  release:
+    types: [created]
+    tags:
+      - '*.*.*'
+jobs:
+  generate-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Get publish version from env
+        id: publish_version
+        run: |-
+          RELEASE_VERSION_WITH_V=${GITHUB_REF#refs/*/}
+          echo ::set-output name=value::${RELEASE_VERSION_WITH_V:1}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.x'
+          source-url: https://nuget.pkg.github.com/mattwelke/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v1
+      - name: Add publish version to package template
+        env:
+          VERSION: ${{ steps.publish_version.outputs.value }}
+        run: |-
+          cd generated/nuget/ProtobufTest
+          cat ProtobufTest.template.csproj \
+            | sed s/{{VERSION}}/${VERSION}/g > ProtobufTest.csproj
+      - name: Generate package
+        run: ./generate_nuget.sh
+      # some from https://github.com/brandedoutcast/publish-nuget/issues/21
+      - name: Build package
+        run: |-
+          cd generated/nuget/ProtobufTest
+          dotnet build --configuration Release
+      - name: Pack package
+        run: |-
+          cd generated/nuget/ProtobufTest
+          dotnet pack ProtobufTest.csproj --output nuget-packages --configuration Release
+      - name: Push package
+        run: |-
+          cd generated/nuget/ProtobufTest
+          dotnet nuget push **/*.nupkg --source https://nuget.pkg.github.com/mattwelke/index.json
