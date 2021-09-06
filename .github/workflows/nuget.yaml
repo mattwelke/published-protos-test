@@ -32,6 +32,7 @@ jobs:
           cd generated/nuget/ProtobufTest
           cat ProtobufTest.template.csproj \
             | sed s/{{VERSION}}/${VERSION}/g > ProtobufTest.csproj
+          rm ProtobufTest.template.csproj
       - name: Generate package
         run: ./generate_nuget.sh
       # some from https://github.com/brandedoutcast/publish-nuget/issues/21
