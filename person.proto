@@ -1,6 +1,8 @@
 syntax = "proto3";
 package mattwelke.protobuf.test;
 
+option csharp_namespace = "MattWelke.ProtobufTest";
+
 option go_package = "github.com/mattwelke/protobuf-test-go/pb";
 
 option java_package = "com.mattwelke.protobuf.test";

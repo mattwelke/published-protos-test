@@ -1,36 +1,11 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: Generate and publish packages
+name: Maven
 on:
   release:
     types: [created]
     tags:
       - '*.*.*'
 jobs:
-  publish-go:
-    runs-on: ubuntu-latest 
-    permissions: 
-      contents: read
-      packages: write 
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-        with:
-          go-version: '^1.16'
-      - name: Install Protoc
-        uses: arduino/setup-protoc@v1
-      - name: Install protoc-gen-go
-        run: go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
-      - name: Generate Go module
-        run: ./generate_go.sh
-      - name: Publish package
-        run: echo "skipping for now"; cat generated/go/github.com/mattwelke/protobuf-test-go/pb/*.go
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  publish-maven:
+  generate-and-publish:
     runs-on: ubuntu-latest 
     permissions: 
       contents: read
@@ -54,11 +29,10 @@ jobs:
         env:
           VERSION: ${{ steps.publish_version.outputs.value }}
         run: |-
-          echo "Release version = $RELEASE_VERSION"
           cd generated/maven/lib
           cat build.template.gradle \
             | sed s/{{VERSION}}/${VERSION}/g > build.gradle
-      - name: Generate Maven package
+      - name: Generate package
         run: ./generate_maven.sh
       - name: Publish package
         run: |-

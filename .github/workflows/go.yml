@@ -1,0 +1,27 @@
+name: Go
+on:
+  release:
+    types: [created]
+    tags:
+      - '*.*.*'
+jobs:
+  generate-and-publish:
+    runs-on: ubuntu-latest 
+    permissions: 
+      contents: read
+      packages: write 
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.16'
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v1
+      - name: Install protoc-gen-go
+        run: go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
+      - name: Generate module
+        run: ./generate_go.sh
+      - name: Publish package
+        run: echo "skipping for now"; cat generated/go/github.com/mattwelke/protobuf-test-go/pb/*.go
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
