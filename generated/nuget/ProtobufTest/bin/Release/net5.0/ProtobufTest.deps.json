@@ -1,0 +1,41 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "ProtobufTest/0.12.0": {
+        "dependencies": {
+          "Google.Protobuf": "3.17.3"
+        },
+        "runtime": {
+          "ProtobufTest.dll": {}
+        }
+      },
+      "Google.Protobuf/3.17.3": {
+        "runtime": {
+          "lib/net5.0/Google.Protobuf.dll": {
+            "assemblyVersion": "3.17.3.0",
+            "fileVersion": "3.17.3.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ProtobufTest/0.12.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Google.Protobuf/3.17.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vBUga9diexJgv9JPNYcs9AZ/5rPKpPCPSWqcqevF6e9KKzv0JwQdz58dSb7nm1xWeeCVB/Umr03cQ5ulF1RNLw==",
+      "path": "google.protobuf/3.17.3",
+      "hashPath": "google.protobuf.3.17.3.nupkg.sha512"
+    }
+  }
+}
